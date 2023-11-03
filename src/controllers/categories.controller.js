@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Product = require("../models/products");
 const Category = require("../models/category");
 const HttpError = require("../models/http-error");
-const { getProductById } = require("./products.controller");
 const { validationResult } = require('express-validator');
 
 const getCategories = async (req, res, next) => {
@@ -45,9 +44,9 @@ const getCategoryById = async (req, res, next) => {
 };
 
 const createCategory = async (req, res, next) => {
-  const errors = validationResult(req);
+  const  errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+    return next(new HttpError(`Invalid inputs passed, please check your data.`, 422));
   }
 
   const { name } = req.body;
@@ -142,16 +141,11 @@ const updateCategoryById = async (req, res, next) => {
   const { name } = req.body;
   const c_id = req.params.c_id;
 
-    // Validar si el nuevo nombre cumple con los requisitos
-    if (typeof name !== 'string' || name.length < 3) {
-      return next(new HttpError('Invalid category name. It must be a string of at least 3 characters.', 422));
-    }
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(new HttpError('Invalid inputs passed, please check your data.', 422));
   }
-
+  console.log(validationResult(req))
   try {
     const existingCategory = await Category.findOne({ name, _id: { $ne: c_id } });
     if (existingCategory) {
