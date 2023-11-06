@@ -1,0 +1,211 @@
+[{
+  "_id": {
+    "$oid": "6541d11c3f824145825476bd"
+  },
+  "name": "Parlante",
+  "price": 2,
+  "brand": "6",
+  "description": "negro",
+  "category_id": {
+    "$oid": "6541b1cc2b07ef40052bd9d8"
+  }
+},
+{
+  "_id": {
+    "$oid": "6541d1acb454c114bf01b6c8"
+  },
+  "name": "mouse",
+  "price": 2,
+  "brand": "Logitech",
+  "description": "Wireless",
+  "category_id": {
+    "$oid": "6541b1cc2b07ef40052bd9d8"
+  }
+},
+{
+  "_id": {
+    "$oid": "65428a71ff419f175ee12527"
+  },
+  "name": "Lámpara",
+  "price": 10,
+  "brand": "GE",
+  "description": "20wats",
+  "category_id": {
+    "$oid": "6541b1cc2b07ef40052bd9d8"
+  }
+},
+{
+  "_id": {
+    "$oid": "6543f6ca12b107bd7a3419ab"
+  },
+  "name": "Mouse",
+  "price": 3,
+  "brand": "Logitech",
+  "description": "Óptico",
+  "category_id": {
+    "$oid": "6541b1cc2b07ef40052bd9d8"
+  }
+},
+{
+  "_id": {
+    "$oid": "6543fa3fc37276629788eeef"
+  },
+  "name": "Corte de pelo",
+  "price": 1,
+  "brand": "Peluquero Carlitos",
+  "description": "Muy corto",
+  "category_id": {
+    "$oid": "6541ce8d6dbb90ccd245eabb"
+  }
+},
+{
+  "_id": {
+    "$oid": "6544eabadb6098ae84417866"
+  },
+  "name": "pan",
+  "price": 1,
+  "brand": "bimbo",
+  "description": "lactal",
+  "category_id": {
+    "$oid": "6544ea4cdb6098ae84417864"
+  }
+},
+{
+  "_id": {
+    "$oid": "6544eda96fa26baca260312b"
+  },
+  "name": "pan de pancho",
+  "price": 2,
+  "brand": "La panaderia",
+  "description": "para pancho",
+  "category_id": {
+    "$oid": "6544ea4cdb6098ae84417864"
+  }
+},
+{
+  "_id": {
+    "$oid": "65464557c4568ee2f74a21ae"
+  },
+  "name": "traje",
+  "price": 6,
+  "brand": "señor traje",
+  "description": "tela gris",
+  "category_id": {
+    "$oid": "6541ce8d6dbb90ccd245eabb"
+  }
+},
+{
+  "_id": {
+    "$oid": "65464588c4568ee2f74a21b4"
+  },
+  "name": "traje",
+  "price": 6,
+  "brand": "señor traje",
+  "description": "tela gris",
+  "category_id": {
+    "$oid": "6541ce8d6dbb90ccd245eabb"
+  }
+},
+{
+  "_id": {
+    "$oid": "65464cace108d85c8ecb22c1"
+  },
+  "name": "traje",
+  "price": 6,
+  "brand": "señor traje",
+  "description": "tela gri",
+  "category_id": {
+    "$oid": "6541ce8d6dbb90ccd245eabb"
+  }
+},
+{
+  "_id": {
+    "$oid": "6547e0d6e59fb119e37d6ac0"
+  },
+  "name": "traj",
+  "price": 6,
+  "brand": "señor traje",
+  "description": "tela gris",
+  "category_id": {
+    "$oid": "6541ce8d6dbb90ccd245eabb"
+  }
+},
+{
+  "_id": {
+    "$oid": "6547e3502ead263d7c87e581"
+  },
+  "name": "trajecito",
+  "price": 5,
+  "brand": "señor traje",
+  "description": "tela gris"
+},
+{
+  "_id": {
+    "$oid": "65480fb2485fe94886ce1213"
+  },
+  "name": "paracetamol",
+  "price": 5,
+  "brand": "elea",
+  "description": "para500",
+  "category_id": {
+    "$oid": "6548115998b93c9bd52bd739"
+  }
+},
+{
+  "_id": {
+    "$oid": "654811c098b93c9bd52bd73f"
+  },
+  "name": "Rosa",
+  "price": 1,
+  "brand": "Avalos",
+  "description": "Roja",
+  "category_id": {
+    "$oid": "6548117098b93c9bd52bd73c"
+  }
+},
+{
+  "_id": {
+    "$oid": "6548124f98b93c9bd52bd749"
+  },
+  "name": "Cloro",
+  "price": 5,
+  "brand": "Ayudin",
+  "description": "Concentrado",
+  "category_id": {
+    "$oid": "65426b26ebe30b1756f576f6"
+  }
+},
+{
+  "_id": {
+    "$oid": "6548126998b93c9bd52bd74d"
+  },
+  "name": "Limpiavidrio",
+  "price": 5,
+  "brand": "Cif",
+  "description": "Diluido",
+  "category_id": {
+    "$oid": "65426b26ebe30b1756f576f6"
+  }
+},
+{
+  "_id": {
+    "$oid": "654812d298b93c9bd52bd751"
+  },
+  "name": "Chocolate",
+  "price": 2,
+  "brand": "Felfort",
+  "description": "Chocolate 60%",
+  "category_id": {
+    "$oid": "65427e61f4980f846dc82d3d"
+  }
+},
+{
+  "_id": {
+    "$oid": "6548216757b58a3349f63d60"
+  },
+  "name": "Barbijo",
+  "price": 30,
+  "brand": "Opera",
+  "description": "20 U.",
+  "category_id": null
+}]

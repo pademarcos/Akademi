@@ -4,7 +4,14 @@ const Category = require("../models/category");
 const HttpError = require("../models/http-error");
 const { validationResult } = require('express-validator');
 
+//Listar categorias.
 const getCategories = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
+  }
+
   let categories;
   try {
     categories = await Category.find({});
@@ -23,6 +30,7 @@ const getCategories = async (req, res, next) => {
   res.json({ categories });
 };
 
+//Listar categorias por id.
 const getCategoryById = async (req, res, next) => {
   const { c_id } = req.params;
   let category;
@@ -43,10 +51,12 @@ const getCategoryById = async (req, res, next) => {
   res.json({ category });
 };
 
+//Crear categoria.
 const createCategory = async (req, res, next) => {
-  const  errors = validationResult(req);
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError(`Invalid inputs passed, please check your data.`, 422));
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
   }
 
   const { name } = req.body;
@@ -79,14 +89,18 @@ const createCategory = async (req, res, next) => {
   res.status(201).json({ category: createdCategory });
 };
 
-
-
+//Eliminar categoria.
 const deleteCategoryById = async (req, res, next) => {
-  const { c_id } = req.params;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
+  }
 
-  let category;
+  const { c_id } = req.params;
+let category
   try {
-    category = await Category.findById(c_id);
+  category = await Category.findById(c_id);
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete category.",
@@ -113,12 +127,12 @@ const deleteCategoryById = async (req, res, next) => {
   }
 
   if (productsWithCategory.length > 0) {
-    // Si existen productos con esta categoría, emite un mensaje de error
-    const error = new HttpError(
-      "Cannot delete a category with associated products. Remove or reassign the products first.",
-      422
-    );
-    return next(error);
+    try {
+      await Product.updateMany({ category_id: c_id }, { $set: { category_id: null } });
+    } catch (err) {
+      const error = new HttpError("Something went wrong while updating products.", 500);
+      return next(error);
+    }
   }
 
   // Si no hay productos con esta categoría, procede a eliminar la categoría
@@ -135,7 +149,7 @@ const deleteCategoryById = async (req, res, next) => {
   res.status(200).json({ message: "Deleted category." });
 };
 
-
+//Actualiza categoria.
 const updateCategoryById = async (req, res, next) => {
 
   const { name } = req.body;
@@ -143,9 +157,11 @@ const updateCategoryById = async (req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
   }
-  console.log(validationResult(req))
+
+
   try {
     const existingCategory = await Category.findOne({ name, _id: { $ne: c_id } });
     if (existingCategory) {
@@ -179,14 +195,12 @@ const updateCategoryById = async (req, res, next) => {
     return next(error);
   }
 
-  // Construye la respuesta sin el campo adicional "id"
   const categoryResponse = {
     name: category.name,
   };
 
   res.status(200).json({ category: categoryResponse });
 };
-
 
 exports.getCategories = getCategories;
 exports.getCategoryById = getCategoryById;

@@ -1,16 +1,22 @@
 const { Router } = require('express');
 const router = Router();
-const { check } = require('express-validator');
+const { check, param } = require('express-validator');
 
 // Validaciones para crear una categoría
-createCategory = [
-  check('name').isString().isLength({ min: 3 }),
+const createCategory = [
+  check('name').isString().isLength({ min: 3 }).withMessage('The name should be a String of at least 3 characters'),
 ]
 
-updateCategory = [
-  check('name').isString().isLength({ min: 3 }),
+const updateCategory = [
+  check('name').isString().isLength({ min: 3 }).withMessage('The name should be a String of at least 3 characters'),
 ]
+
+const paramIdValidation = [
+  param('c_id').isMongoId().withMessage('Category ID must be a valid'),
+];
+
 
 
 exports.createCategory = createCategory;
 exports.updateCategory = updateCategory;
+exports.paramIdValidation = paramIdValidation;

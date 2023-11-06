@@ -3,7 +3,8 @@ const Product = require("../models/products");
 const Category = require("../models/category");
 const HttpError = require("../models/http-error");
 const { validationResult } = require('express-validator');
-const {createProductValidation} = require('../validators/products.validators')
+// const { createProductValidation } = require('../validators/products.validators');
+// const { updateProductValidation } = require('../validators/products.validators');
 
 //listar todos los productos
 const getProducts = async (req, res, next) => {
@@ -27,6 +28,12 @@ const getProducts = async (req, res, next) => {
 
 //listar productos por categoria
 const getProductsByCategoryId = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
+  }
+  
   const { c_id } = req.params;
   let products;
   try {
@@ -48,8 +55,14 @@ const getProductsByCategoryId = async (req, res, next) => {
   }
   res.json({ products });
 };
-//listar por Id
+
+//listar productos por Id
 const getProductById = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
+  }
   const { p_id } = req.params;
   let product;
   try {
@@ -69,20 +82,38 @@ const getProductById = async (req, res, next) => {
   res.json({ product });
 };
 
+//Crear producto
 const createProduct = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
   }
 
   const { name, price, brand, description, category_id } = req.body;
+
+   // Verificar si un producto con los mismos atributos ya existe
+   let existingProduct;
+   try {
+     existingProduct = await Product.findOne({ name, brand, description, category_id });
+   } catch (err) {
+     const error = new HttpError(
+       "Creating product failed, please try again.",
+       500
+     );
+     return next(error);
+   }
+ 
+   if (existingProduct) {
+     const error = new HttpError("A product with the same attributes already exists.", 422);
+     return next(error);
+   }
 
   const createdProduct = new Product({
     name,
     price,
     brand,
     description,
-    category_id,
   });
 
   let category;
@@ -105,6 +136,7 @@ const createProduct = async (req, res, next) => {
       );
       return next(error);
     }
+    createdProduct.category_id = category;
   }
 
   try {
@@ -120,7 +152,14 @@ const createProduct = async (req, res, next) => {
   res.status(201).json({ product: createdProduct });
 };
 
+//Eliminar producto
 const deleteProductById = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
+  }
+
   const productId = req.params.p_id;
 
   let product;
@@ -152,10 +191,12 @@ const deleteProductById = async (req, res, next) => {
   res.status(200).json({ message: "Deleted product." });
 };
 
+//Actualizar producto
 const updateProductById = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return next(new HttpError('Invalid inputs passed, please check your data.', 422));
+    const errorMessages = errors.array().map((error) => error.msg);
+    return next(new HttpError(errorMessages.join(', '), 400));
   }
 
   const { name, price, brand, description, category_id } = req.body;
@@ -175,6 +216,25 @@ const updateProductById = async (req, res, next) => {
   if (!product) {
     const error = new HttpError("Could not find product for this id.", 404);
     return next(error);
+  }
+
+  let existingCategory;
+
+  if (category_id !== undefined) { // Si se proporcionó un nuevo category_id
+    try {
+      existingCategory = await Category.findById(category_id);
+    } catch (err) {
+      const error = new HttpError(
+        "Something went wrong, could not check the category.",
+        500
+      );
+      return next(error);
+    }
+
+    if (!existingCategory) {
+      const error = new HttpError("Could not find category for the provided id.", 404);
+      return next(error);
+    }
   }
 
   // Validar las actualizaciones de campos

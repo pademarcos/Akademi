@@ -1,0 +1,54 @@
+[{
+  "_id": {
+    "$oid": "6541b1cc2b07ef40052bd9d8"
+  },
+  "name": "Electrónica"
+},
+{
+  "_id": {
+    "$oid": "6541ce8d6dbb90ccd245eabb"
+  },
+  "name": "Sastrería"
+},
+{
+  "_id": {
+    "$oid": "65426b26ebe30b1756f576f6"
+  },
+  "name": "Limpieza"
+},
+{
+  "_id": {
+    "$oid": "65427e61f4980f846dc82d3d"
+  },
+  "name": "kiosco"
+},
+{
+  "_id": {
+    "$oid": "6544ea4cdb6098ae84417864"
+  },
+  "name": "Panaderia"
+},
+{
+  "_id": {
+    "$oid": "6545154b2268f5afbd58a26d"
+  },
+  "name": "Cocina"
+},
+{
+  "_id": {
+    "$oid": "654515662268f5afbd58a270"
+  },
+  "name": "Autopartes"
+},
+{
+  "_id": {
+    "$oid": "6548115998b93c9bd52bd739"
+  },
+  "name": "Farmacia"
+},
+{
+  "_id": {
+    "$oid": "6548117098b93c9bd52bd73c"
+  },
+  "name": "Floreria"
+}]
